@@ -55,7 +55,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         // Extra, not necessary to use here. Just to interrupt the process and add own checks
-        Fortify::authenticateUsing(function (Request $request) {           
+        Fortify::authenticateUsing(function(Request $request) {           
             $user = User::where('email', $request->email)->first();
     
             if ($user &&
@@ -64,12 +64,16 @@ class FortifyServiceProvider extends ServiceProvider
             }
         });
 
-        Fortify::requestPasswordResetLinkView(function () {
+        Fortify::requestPasswordResetLinkView(function() {
             return view('auth.forgot-password');
         });
 
-        Fortify::resetPasswordView(function ($request) {
+        Fortify::resetPasswordView(function($request) {
             return view('auth.reset-password', ['request' => $request]);
         });    
+
+        Fortify::verifyEmailView(function() {
+            return view('auth.verify-email');
+        });
     }
 }
