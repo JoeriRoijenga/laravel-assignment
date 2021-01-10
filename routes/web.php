@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,5 @@ Route::get('/', function () {
 
 Route::view('/home', 'home')->middleware(['auth', 'verified']);
 
-Route::view('profile/edit', 'profile.edit')->middleware('auth');
-Route::view('profile/password', 'profile.password')->middleware('auth');
+Route::get('/user/edit/{id}', [UserController::class, 'edit'])->middleware('auth');
+Route::get('/user/two-factor-auth', [UserController::class, 'showTwoFactor'])->middleware(['auth', 'two.factor.auth']);

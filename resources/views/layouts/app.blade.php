@@ -58,15 +58,39 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                    <div id="menu-item-user-edit">
+                                        <a class="dropdown-item"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('profile-edit-form').submit();">
+                                            {{ __('Edit Profile') }}
+                                        </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                        <form id="profile-edit-form" action="{{ url('/user/edit/' . auth()->user()->id) }}" method="GET" class="d-none"></form>
+                                    </div>
+                                    
+                                    @if (auth()->user()->two_factor_secret)
+                                        <div id="menu-item-two-factor-auth">
+                                            <a class="dropdown-item"
+                                                onclick="event.preventDefault();
+                                                                document.getElementById('two-factor-auth-form').submit();">
+                                                {{ __('Two Factor') }}
+                                            </a>
+
+                                            <form id="two-factor-auth-form" action="{{ url('/user/two-factor-auth') }}" method="GET" class="d-none"></form>
+                                        </div>
+                                    @endif
+                                    
+                                    <div id="menu-item-logout">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </div>
                                 </div>
                             </li>
                         @endguest

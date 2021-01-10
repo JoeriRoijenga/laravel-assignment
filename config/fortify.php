@@ -137,9 +137,10 @@ return [
         Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
-        // Features::twoFactorAuthentication([
-        //     'confirmPassword' => true,
-        // ]),
+        Features::twoFactorAuthentication([
+            // Turned off because of the lack of time with edit user page.
+            'confirmPassword' => false,
+        ]),
     ],
 
 ];
