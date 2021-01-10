@@ -5,12 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Edit Profile') }}</div>
+                <div class="card-header">{{ __('Edit Company') }}</div>
 
                 <div class="card-body">
-                    <form id="user-edit-form" method="POST" action="{{ route('user-profile-information.update') }}">
+                    <form id="user-edit-form" method="POST" action="{{ url('/company/update') }}">
                         @csrf
-                        @method('PUT')
+                        @method('GET')
                         
                         <input id="id" type="hidden" name="id" value="{{$company->company_id}}">
 

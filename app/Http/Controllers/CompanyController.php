@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use Illuminate\Support\Facades\Input;
 
 class CompanyController extends Controller
 {
     /**
-     * Edit the profile for a given user.
+     * Edit the given company.
      *
      * @param  int  $id
      * @return \Illuminate\View\View
@@ -25,11 +26,12 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showAll($deleted = false)
+    public function showAll($deleted = false, $updated = false)
     {
         return view('overview-companies', [
             'companies' => Company::all(),
             'deleted' => $deleted,
+            'updated' => $updated
         ]);
     }
 
@@ -45,5 +47,28 @@ class CompanyController extends Controller
         }
 
         return $this->showAll();
+    }
+
+    /**
+     * Save the given company.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function update(Request $request) {
+        $company = Company::findOrFail($request->id);
+        
+        $company->fill([
+            'company_name' => $request->company_name,
+            'path_to_logo' => $request->logo,
+            'city' => $request->city,
+            'zip' => $request->zip,
+            'street' => $request->street,
+            'housenumber' => $request->housenumber,
+        ]);
+    
+        $company->save();
+
+        return $this->showAll(false, true);
     }
 }

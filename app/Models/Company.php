@@ -9,6 +9,7 @@ class Company extends Model
 {
     use HasFactory;
     public $timestamps = false;
+    protected $primaryKey = 'company_id';
 
     /**
      * The attributes that are mass assignable.

@@ -33,3 +33,4 @@ Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware([
 Route::get('/companies/overview', [CompanyController::class, 'showAll'])->middleware(['auth', 'verified']);
 Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->middleware(['auth', 'verified']);
 Route::get('/company/delete/{id}', [CompanyController::class, 'delete'])->middleware(['auth', 'verified']);
+Route::get('/company/update', [CompanyController::class, 'update', 'as' => 'company-update'])->middleware(['auth', 'verified']);

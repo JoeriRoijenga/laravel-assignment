@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Companies Overview') }}</div>
 
@@ -13,6 +13,10 @@
                     @if ($deleted == true)
                         <div class="alert alert-success" role="alert">
                             Succesfully deleted company!
+                        </div> 
+                    @elseif ($updated == true)
+                        <div class="alert alert-success" role="alert">
+                            Succesfully updated company!
                         </div>                   
                     @endif
                     <div class="table-responsive">
