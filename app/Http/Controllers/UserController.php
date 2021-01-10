@@ -18,6 +18,7 @@ class UserController extends Controller
         $tfAuth = "Enabled";
         $btnAuthClass = "success";
         $tfUpdated = false;
+        $userItself = false;
 
         if (!auth()->user()->two_factor_secret) {
             $tfAuth = "Disabled";
@@ -28,11 +29,16 @@ class UserController extends Controller
             $tfUpdated = true;
         }
 
+        if (auth()->user()->id == $id) {
+            $userItself = true;
+        }
+
         return view('user.edit', [
             'user' => User::findOrFail($id),
             'tfAuth' => $tfAuth,
             'btnAuthClass' => $btnAuthClass,
             'tfUpdated' => $tfUpdated,
+            'userItself' => $userItself,
         ]);
     }
 
@@ -43,8 +49,34 @@ class UserController extends Controller
      */
     public function showTwoFactor()
     {
-        return view('user.two-factor-auth', [
-            
+        return view('user.two-factor-auth');
+    }
+
+    /**
+     * Show all users.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showAll($deleted = false)
+    {
+        return view('overview-users', [
+            'users' => User::all(),
+            'deleted' => $deleted,
         ]);
+    }
+
+
+    /**
+     * Delete the given user, if exists
+     *
+     * @return \Illuminate\View\View
+     */
+    public function delete($id)
+    {
+        if (User::where('id', $id)->delete()) {
+            return $this->showAll(true);
+        }
+
+        return $this->showAll();
     }
 }

@@ -14,11 +14,16 @@ use App\Http\Controllers\UserController;
 |
 */
 
+// Welcome
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Home
 Route::view('/home', 'home')->middleware(['auth', 'verified']);
 
+// Users
 Route::get('/user/edit/{id}', [UserController::class, 'edit'])->middleware('auth');
 Route::get('/user/two-factor-auth', [UserController::class, 'showTwoFactor'])->middleware(['auth', 'two.factor.auth']);
+Route::get('/users/overview', [UserController::class, 'showAll'])->middleware(['auth', 'verified']);
+Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use App\Models\User;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -18,6 +19,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update($user, array $input)
     {
+        $dbUser = User::findOrFail($input['id']);
+        
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
 
@@ -26,17 +29,19 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'string',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore($user->id),
+                Rule::unique('users')->ignore($dbUser->id),
             ],
-        ])->validateWithBag('updateProfileInformation');
-
-        if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
-            $this->updateVerifiedUser($user, $input);
+        ])->validate();
+        // No idea why, but this failed.
+        //->validateWithBag('updateProfileInformation');
+                
+        if ($input['email'] !== $dbUser->email && $dbUser instanceof MustVerifyEmail) {
+            $this->updateVerifiedUser($dbUser, $input);
         } else {
-            $user->forceFill([
+            $dbUser->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'role' => $input['role'],
             ])->save();
         }
     }
@@ -50,12 +55,13 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     protected function updateVerifiedUser($user, array $input)
     {
-        $user->forceFill([
+        $dbUser->forceFill([
             'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
+            'role' => $input['role'],
         ])->save();
 
-        $user->sendEmailVerificationNotification();
+        $dbUser->sendEmailVerificationNotification();
     }
 }
