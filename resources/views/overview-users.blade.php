@@ -7,7 +7,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Users Overview') }}</div>
+                <div class="card-header">
+                    <form action="" method="POST">
+                        <p class="float-left">{{ __('Users Overview') }}</p>
+                        @if(auth()->user()->role == 2)
+                            <p class="float-left" style="font-size: 10px"> *Super Admin sees all Users<p>
+                        @endif
+                        <button class="btn btn-secondary float-right" type="submit">Add User</button>
+                    </div>
 
                 <div class="card-body">
                     @if ($deleted == true)
