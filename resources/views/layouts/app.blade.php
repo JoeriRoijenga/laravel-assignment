@@ -33,16 +33,20 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/users/overview') }}">
-                                Users
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/companies/overview') }}">
-                                Companies
-                            </a>
-                        </li>
+                        @if(auth()->user()->role != 0)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/users/overview') }}">
+                                    Users
+                                </a>
+                            </li>
+                        @endif
+                        @if(auth()->user()->role == 2)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/companies/overview') }}">
+                                    Companies
+                                </a>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

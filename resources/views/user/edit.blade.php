@@ -55,6 +55,7 @@
                                 <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
                                     <option value="0" <?php if($user->role == 0) {echo "selected";} ?>>User</option>
                                     <option value="1" <?php if($user->role == 1) {echo "selected";} ?>>Admin</option>
+                                    <option value="2" <?php if($user->role == 2) {echo "selected";} ?>>Super Admin</option>
                                 </select>
 
                                 @error('role')

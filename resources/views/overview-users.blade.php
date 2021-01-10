@@ -59,7 +59,7 @@
                                         {{ $user->company_name }}
                                     </td>
                                     <td>
-                                        {{ $user->role ? "Admin" : "User" }}
+                                        {{ $user->role == 2 ? "Super Admin" : ($user->role ? "Admin" : "User") }}
                                     </td>
                                     <td>
                                         <form action="/user/edit/{{$user->id}}" method="GET">
