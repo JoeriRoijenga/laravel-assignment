@@ -13,6 +13,9 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('users');
+        
+        Schema::disableForeignKeyConstraints();
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -20,9 +23,13 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->tinyInteger('role');
+            $table->unsignedBigInteger('job_id');
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -32,6 +39,11 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        if (Schema::hasColumn('users', 'job_id')) {
+            $table->dropForeign('job_id'); 
+            $table->dropIndex('job_id');
+            $table->dropColumn('job_id');
+        }
         Schema::dropIfExists('users');
     }
 }

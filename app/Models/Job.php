@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Job extends Model
 {
     use HasFactory;
     public $timestamps = false;
@@ -16,11 +16,7 @@ class Company extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'path_to_logo',
-        'city',
-        'zip',
-        'street',
-        'housenumber',
+        'title',
+        'company_id',
     ];
 }

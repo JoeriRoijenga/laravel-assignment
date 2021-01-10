@@ -21,8 +21,6 @@ class CreateCompaniesTable extends Migration
             $table->string('zip');
             $table->string('street');
             $table->string('housenumber');
-            $table->timestamp('updated_at')->nullable();
-            $table->timestamp('created_at')->nullable();
         });
     }
 
