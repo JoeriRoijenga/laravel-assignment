@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
         
         Schema::disableForeignKeyConstraints();
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -24,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('role');
             $table->unsignedBigInteger('job_id');
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
+            $table->foreign('job_id')->references('job_id')->on('jobs')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

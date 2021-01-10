@@ -39,7 +39,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('home') }}">
+                            <a class="nav-link" href="{{ url('/companies/overview') }}">
                                 Companies
                             </a>
                         </li>

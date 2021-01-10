@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use DB;
 
 class UserController extends Controller
 {
@@ -59,8 +60,13 @@ class UserController extends Controller
      */
     public function showAll($deleted = false)
     {
+        $user = DB::table('users')
+        ->join('jobs', 'users.job_id', '=', 'jobs.job_id')
+        ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
+        ->get();
+
         return view('overview-users', [
-            'users' => User::all(),
+            'users' => $user,
             'deleted' => $deleted,
         ]);
     }

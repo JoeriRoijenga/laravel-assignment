@@ -9973,3 +9973,7 @@ h3 {
 .nav-header {
   font-family: bold italic;
 }
+
+.container {
+  width: 80%;
+}

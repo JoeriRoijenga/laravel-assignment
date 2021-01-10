@@ -5,14 +5,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Users Overview') }}</div>
+                <div class="card-header">{{ __('Companies Overview') }}</div>
 
                 <div class="card-body">
                     @if ($deleted == true)
                         <div class="alert alert-success" role="alert">
-                            Succesfully deleted user!
+                            Succesfully deleted company!
                         </div>                   
                     @endif
                     <div class="table-responsive">
@@ -25,49 +25,31 @@
                                     Name
                                 </th>
                                 <th>
-                                    E-Mail
-                                </th>
-                                <th>
-                                    Job
-                                </th>
-                                <th>
-                                    Company
-                                </th>
-                                <th>
-                                    Role
+                                    Address
                                 </th>
                                 <th>
                                 </th>
                                 <th>
                                 </th>
                             </tr>
-                            @foreach($users as $user)
+                            @foreach($companies as $company)
                                 <tr>
                                     <td>
                                         {{ $count }}
                                     </td>
                                     <td>
-                                        {{ $user->name }}
+                                        {{ $company->company_name }}
                                     </td>
                                     <td>
-                                        {{ $user->email }}
+                                        {{ $company->street }} {{ $company->housenumber }}, {{ $company->zip }}, {{ $company->city }}
                                     </td>
                                     <td>
-                                        {{ $user->title }}
-                                    </td>
-                                    <td>
-                                        {{ $user->company_name }}
-                                    </td>
-                                    <td>
-                                        {{ $user->role ? "Admin" : "User" }}
-                                    </td>
-                                    <td>
-                                        <form action="/user/edit/{{$user->id}}" method="GET">
+                                        <form action="/user/edit/{{$company->company_id}}" method="GET">
                                             <button class="btn btn-info">Edit</button>
                                         </form>
                                     </td>
                                     <td>
-                                        <form action="/user/delete/{{$user->id}}" method="GET">
+                                        <form action="/user/delete/{{$company->company_id}}" method="GET">
                                             <button class="btn btn-danger">Delete</button>
                                         </form>
                                     </td>
