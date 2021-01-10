@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use App\Http\Controllers\UserController;
+
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -34,7 +37,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         ])->validate();
         // No idea why, but this failed.
         //->validateWithBag('updateProfileInformation');
-                
+        
         if ($input['email'] !== $dbUser->email && $dbUser instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($dbUser, $input);
         } else {
@@ -44,6 +47,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'role' => $input['role'],
             ])->save();
         }
+        
+        // Redirect won't work
+        // return redirect()->action([UserController::class, 'showAll']);
     }
 
     /**

@@ -19,4 +19,18 @@ class CompanyController extends Controller
             'deleted' => $deleted,
         ]);
     }
+
+    /**
+     * Delete the given compay, if exists
+     *
+     * @return \Illuminate\View\View
+     */
+    public function delete($id)
+    {
+        if (Company::where('company_id', $id)->delete()) {
+            return $this->showAll(true);
+        }
+
+        return $this->showAll();
+    }
 }

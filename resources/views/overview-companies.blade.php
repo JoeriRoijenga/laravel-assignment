@@ -44,12 +44,12 @@
                                         {{ $company->street }} {{ $company->housenumber }}, {{ $company->zip }}, {{ $company->city }}
                                     </td>
                                     <td>
-                                        <form action="/user/edit/{{$company->company_id}}" method="GET">
+                                        <form action="/company/edit/{{$company->company_id}}" method="GET">
                                             <button class="btn btn-info">Edit</button>
                                         </form>
                                     </td>
                                     <td>
-                                        <form action="/user/delete/{{$company->company_id}}" method="GET">
+                                        <form action="/company/delete/{{$company->company_id}}" method="GET">
                                             <button class="btn btn-danger">Delete</button>
                                         </form>
                                     </td>
