@@ -28,6 +28,11 @@ Route::get('/user/edit/{id}', [UserController::class, 'edit'])->middleware('auth
 Route::get('/user/two-factor-auth', [UserController::class, 'showTwoFactor'])->middleware(['auth', 'two.factor.auth']);
 Route::get('/users/overview', [UserController::class, 'showAll'])->middleware(['auth', 'verified']);
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);
+Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);
+
+// Email Verify
+Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyView'])->name('verification.verify');
+Route::get('/email/verify/update', [UserController::class, 'verify'])->name('verification.verify.update');
 
 // Companies
 Route::get('/companies/overview', [CompanyController::class, 'showAll'])->middleware(['auth', 'verified']);

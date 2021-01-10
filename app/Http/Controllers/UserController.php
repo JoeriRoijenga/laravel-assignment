@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Rules\Password;
 
 class UserController extends Controller
 {
@@ -93,10 +97,48 @@ class UserController extends Controller
      */
     public function delete($id)
     {
-        if (User::where('id', $id)->delete()) {
+        if (bwhere('id', $id)->delete()) {
             return $this->showAll(true);
         }
 
         return $this->showAll();
+    }
+
+    /**
+     * Verify new User, show view
+     *
+     * @return \Illuminate\View\View
+     */
+    public function verifyView($id, $hash)
+    {
+        return view('auth.verify-by-email', [
+            'id' => $id,
+        ]);
+    }
+
+    /**
+     * Verify new User and save passwords
+     *
+     * @return \Illuminate\View\View
+     */
+    public function verify(Request $request)
+    {
+        // Not the best way, yet couldn't fix it in time
+        if (isset($request->password) && $request->password !== $request->password_confirmation) {
+            Validator::make($request->all(), [
+                'password' => ['required', 'string'],
+                'password_confirmation' => ['required', 'string', new Password, 'confirmed'],
+            ])->after(function ($validator) use ($request) {
+                $validator->errors()->add('password', __('The provided password does not match your current password.'));
+            })->validate();
+        }
+        
+        $user = User::findOrFail($request->id);
+        $user->forceFill([
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make($request->password),
+        ])->save();
+        
+        return view('home');
     }
 }

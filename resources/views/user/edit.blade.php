@@ -47,24 +47,27 @@
                                 @enderror
                             </div>
                         </div>
-                        
-                        <div class="form-group row">
-                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+                        @if (auth()->user()->role !== 0)
+                            <div class="form-group row">
+                                <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
 
-                            <div class="col-md-6">
-                                <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
-                                    <option value="0" <?php if($user->role == 0) {echo "selected";} ?>>User</option>
-                                    <option value="1" <?php if($user->role == 1) {echo "selected";} ?>>Admin</option>
-                                    <option value="2" <?php if($user->role == 2) {echo "selected";} ?>>Super Admin</option>
-                                </select>
+                                <div class="col-md-6">
+                                    <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
+                                        <option value="0" <?php if($user->role == 0) {echo "selected";} ?>>User</option>
+                                        <option value="1" <?php if($user->role == 1) {echo "selected";} ?>>Admin</option>
+                                        @if (auth()->user()->role == 2)
+                                            <option value="2" <?php if($user->role == 2) {echo "selected";} ?>>Super Admin</option>
+                                        @endif
+                                    </select>
 
-                                @error('role')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                    @error('role')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         @if($userItself)                    
                             <div class="form-group row">

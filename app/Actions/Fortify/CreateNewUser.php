@@ -28,15 +28,15 @@ class CreateNewUser implements CreatesNewUsers
                 'email',
                 'max:255',
                 Rule::unique(User::class),
-            ],
-            'password' => $this->passwordRules(),
+            ]
         ])->validate();
 
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
-            'password' => Hash::make($input['password']),
+            'password' => Hash::make("best-secret-password-in-the-world!"),
             'role' => 0,
+            'job_id' => 1,
         ]);
     }
 }
