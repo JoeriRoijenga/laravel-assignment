@@ -77,13 +77,13 @@ class CompanyController extends Controller
         if ($company->company_name !== $request->company_name) {
             $explPath = explode('/', $company->path_to_logo);
             $path = 'images/' . $request->company_name . "/" . $explPath[2];
-            Storage::move($company->path_to_logo, $path);
+            Storage::move($company->path_to_logo, 'public/' . $path);
             $test = '/' . $explPath[0] . '/' . $explPath[1];
-            Storage::deleteDirectory($test);
+            Storage::deleteDirectory('public/' . $test);
         }
 
         if ($request->logo != null) {
-            $path = $request->logo->storeAs("images/" . $request->company_name, $fileName);
+            $path = $request->logo->storeAs("public/images/" . $request->company_name, $fileName);
         }
 
         $company->fill([

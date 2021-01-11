@@ -8,6 +8,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
+                    <img src="{{ url('storage/images/logo.png') }}" alt="" class="img-thumbnail float-left" style="width:60px; height:60px;">
+                    
                     <form action="{{ route('register-view') }}" method="GET">
                         <p class="float-left">{{ __('Users Overview') }}</p>
                         @if(auth()->user()->role == 2)
