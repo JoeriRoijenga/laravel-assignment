@@ -8,9 +8,9 @@
                 <div class="card-header">{{ __('Edit Company') }}</div>
 
                 <div class="card-body">
-                    <form id="user-edit-form" method="POST" action="{{ url('/company/update') }}">
+                    <form id="user-edit-form" method="POST" action="{{ url('/company/update') }}" enctype="multipart/form-data">
                         @csrf
-                        @method('GET')
+                        @method('POST')
                         
                         <input id="id" type="hidden" name="id" value="{{$company->company_id}}">
 
@@ -32,7 +32,7 @@
                             <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label>
 
                             <div class="col-md-6">
-                                <input id="logo" type="logo" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') ?? $company->path_to_logo }}" required autofocus>
+                                <input id="logo" type="file" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ $company->path_to_logo }}" autofocus>
 
                                 @error('logo')
                                     <span class="invalid-feedback" role="alert">

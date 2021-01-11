@@ -7,6 +7,8 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class CompanyController extends Controller
 {
@@ -60,11 +62,33 @@ class CompanyController extends Controller
      * @return \Illuminate\View\View
      */
     public function update(Request $request) {
-        $company = Company::findOrFail($request->id);
+        $request->validate([
+            'logo' => 'dimensions:max_width=250,max_height=250',
+        ]);
         
+        $path = "";
+        $company = Company::findOrFail($request->id);
+        $fileName = $company->path_to_logo;
+
+        if ($request->logo != null) {
+            $fileName = $request->logo->getClientOriginalName();
+        }
+
+        if ($company->company_name !== $request->company_name) {
+            $explPath = explode('/', $company->path_to_logo);
+            $path = 'images/' . $request->company_name . "/" . $explPath[2];
+            Storage::move($company->path_to_logo, $path);
+            $test = '/' . $explPath[0] . '/' . $explPath[1];
+            Storage::deleteDirectory($test);
+        }
+
+        if ($request->logo != null) {
+            $path = $request->logo->storeAs("images/" . $request->company_name, $fileName);
+        }
+
         $company->fill([
             'company_name' => $request->company_name,
-            'path_to_logo' => $request->logo,
+            'path_to_logo' => $path,
             'city' => $request->city,
             'zip' => $request->zip,
             'street' => $request->street,
@@ -72,7 +96,7 @@ class CompanyController extends Controller
         ]);
     
         $company->save();
-
+     
         return $this->showAll(false, true);
     }
 

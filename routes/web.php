@@ -42,7 +42,7 @@ Route::get('/email/verify/update', [UserController::class, 'verify'])->name('ver
 Route::get('/companies/overview', [CompanyController::class, 'showAll'])->middleware(['auth', 'verified']);
 Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->middleware(['auth', 'verified']);
 Route::get('/company/delete/{id}', [CompanyController::class, 'delete'])->middleware(['auth', 'verified']);
-Route::get('/company/update', [CompanyController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('/company/update', [CompanyController::class, 'update'])->middleware(['auth', 'verified']);
 Route::get('/company/add', function () {
     return view('company.add');
 })->middleware(['auth', 'verified'])->name('company-add');
