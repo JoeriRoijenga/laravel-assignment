@@ -30,13 +30,17 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ]
         ])->validate();
-
-        return User::create([
+        
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make("best-secret-password-in-the-world!"),
             'role' => 0,
             'job_id' => 1,
         ]);
+        
+        $user->sendEmailVerificationNotification();
+
+        return Route('show-all-users');
     }
 }

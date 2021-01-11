@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <form action="{{ route('register') }}" method="GET">
+                    <form action="{{ route('register-view') }}" method="GET">
                         <p class="float-left">{{ __('Users Overview') }}</p>
                         @if(auth()->user()->role == 2)
                             <p class="float-left" style="font-size: 10px"> *Super Admin sees all Users<p>

@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 
@@ -26,9 +26,14 @@ Route::view('/home', 'home')->middleware(['auth', 'verified']);
 // Users
 Route::get('/user/edit/{id}', [UserController::class, 'edit'])->middleware('auth');
 Route::get('/user/two-factor-auth', [UserController::class, 'showTwoFactor'])->middleware(['auth', 'two.factor.auth']);
-Route::get('/users/overview', [UserController::class, 'showAll'])->middleware(['auth', 'verified']);
+Route::get('/users/overview', [UserController::class, 'showAll'])->middleware(['auth', 'verified'])->name('show-all-users');
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);
+
+Route::get('/user/register', [RegisterUserController::class, 'store'])->middleware(['auth', 'verified'])->name('register-user');
+Route::get('/user/register/new', function () {
+    return view('auth.register');
+})->name('register-view');
 
 // Email Verify
 Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyView'])->name('verification.verify');

@@ -97,7 +97,7 @@ class UserController extends Controller
      */
     public function delete($id)
     {
-        if (bwhere('id', $id)->delete()) {
+        if (User::where('id', $id)->delete()) {
             return $this->showAll(true);
         }
 
@@ -140,5 +140,9 @@ class UserController extends Controller
         ])->save();
         
         return view('home');
+    }
+
+    public function register() {
+        dd("register");
     }
 }
