@@ -41,6 +41,26 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
+                                    <option value="0">User</option>
+                                    <option value="1">Admin</option>
+                                    @if (auth()->user()->role == 2)
+                                        <option value="2">Super Admin</option>
+                                    @endif
+                                </select>
+
+                                @error('role')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="job" class="col-md-4 col-form-label text-md-right">{{ __('Job') }}</label>
 
                             <div class="col-md-6">
@@ -50,7 +70,7 @@
                                     @endforeach
                                 </select>
 
-                                @error('role')
+                                @error('job')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -69,7 +89,7 @@
                                         @endforeach
                                     </select>
 
-                                    @error('role')
+                                    @error('company')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

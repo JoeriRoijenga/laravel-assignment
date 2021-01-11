@@ -89,6 +89,18 @@
                                         </div>
                                     @endif
                                     
+                                    @if (auth()->user()->role !== 0)
+                                        <div id="menu-item-user-edit">
+                                            <a class="dropdown-item"
+                                                onclick="event.preventDefault();
+                                                                document.getElementById('company-edit-form').submit();">
+                                                {{ __('Edit Company') }}
+                                            </a>
+
+                                            <form id="company-edit-form" action="{{ url('/company/edit/' . auth()->user()->company_id) }}" method="GET" class="d-none"></form>
+                                        </div>
+                                    @endif
+
                                     <div id="menu-item-logout">
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();

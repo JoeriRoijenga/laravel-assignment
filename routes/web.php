@@ -39,11 +39,11 @@ Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyView'])->
 Route::get('/email/verify/update', [UserController::class, 'verify'])->name('verification.verify.update');
 
 // Companies
-Route::get('/companies/overview', [CompanyController::class, 'showAll'])->middleware(['auth', 'verified']);
+Route::get('/companies/overview', [CompanyController::class, 'showAll'])->middleware(['auth', 'verified', 'super.user']);
 Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->middleware(['auth', 'verified']);
-Route::get('/company/delete/{id}', [CompanyController::class, 'delete'])->middleware(['auth', 'verified']);
+Route::get('/company/delete/{id}', [CompanyController::class, 'delete'])->middleware(['auth', 'verified', 'super.user']);
 Route::post('/company/update', [CompanyController::class, 'update'])->middleware(['auth', 'verified']);
 Route::get('/company/add', function () {
     return view('company.add');
-})->middleware(['auth', 'verified'])->name('company-add');
-Route::get('/company/add/new', [CompanyController::class, 'add'])->middleware(['auth', 'verified'])->name('company-add-new');
+})->middleware(['auth', 'verified', 'super.user'])->name('company-add');
+Route::get('/company/add/new', [CompanyController::class, 'add'])->middleware(['auth', 'verified', 'super.user'])->name('company-add-new');

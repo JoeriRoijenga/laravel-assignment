@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use DB;
+use App\Providers\RouteServiceProvider;
 
 class CompanyController extends Controller
 {
@@ -48,10 +49,15 @@ class CompanyController extends Controller
     public function delete($id)
     {
         User::where('company_id', $id)->delete();
-
-        if (Company::where('company_id', $id)->delete()) {
+        $company = Company::where('company_id', $id)->first();
+        $explPath = explode('/', $company->path_to_logo);
+        Storage::deleteDirectory('public/' . $explPath[0] . '/' . $explPath[1]);
+        
+        if ($company->delete()) {
             return $this->showAll(true);
         }
+
+        
 
         return $this->showAll();
     }
@@ -75,17 +81,18 @@ class CompanyController extends Controller
             $fileName = $request->logo->getClientOriginalName();
         }
 
-        if ($company->company_name !== $request->company_name) {
+        if ($company->company_name !== $request->company_name && $company->path_to_logo != 'images/logo.png') {
             $explPath = explode('/', $company->path_to_logo);
             $path = 'images/' . $request->company_name . "/" . $explPath[2];
-            Storage::move($company->path_to_logo, 'public/' . $path);
-            $test = '/' . $explPath[0] . '/' . $explPath[1];
-            Storage::deleteDirectory('public/' . $test);
+            Storage::move('public/' . $company->path_to_logo, 'public/' . $path);
+            Storage::deleteDirectory('public/' . $explPath[0] . '/' . $explPath[1]);
         }
 
         if ($request->logo != null) {
             $request->logo->storeAs("public/images/" . $request->company_name, $fileName);
             $path = "images/" . $request->company_name . "/" . $fileName;
+        } elseif ($path == "") {
+            $path = $company->path_to_logo;
         }
 
         $company->fill([
@@ -98,7 +105,10 @@ class CompanyController extends Controller
         ]);
     
         $company->save();
-     
+        
+        if (auth()->user()->role !== 2) {
+            return redirect(RouteServiceProvider::HOME);
+        }
         return $this->showAll(false, true);
     }
 
@@ -111,8 +121,8 @@ class CompanyController extends Controller
     public function add(Request $request) {
         $company = Company::create([
             'company_name' => $request->company_name,
-            'path_to_logo' => 'logo.png',
-            'city' => 1,
+            'path_to_logo' => 'images/logo.png',
+            'city' => "city",
             'zip' => 'xxxxx',
             'street' => 'street',
             'housenumber' => 1,
