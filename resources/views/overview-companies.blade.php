@@ -44,7 +44,7 @@
                             @foreach($companies as $company)
                                 <tr>
                                     <td>
-                                        {{ $count }}
+                                        <img src="{{ url('storage/' . $company->path_to_logo) }}" alt="" class="img-thumbnail float-left" style="width:60px; height:60px;">
                                     </td>
                                     <td>
                                         {{ $company->company_name }}

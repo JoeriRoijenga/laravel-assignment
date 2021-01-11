@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use DB;
 
 class CompanyController extends Controller
 {
@@ -35,7 +36,7 @@ class CompanyController extends Controller
         return view('overview-companies', [
             'companies' => Company::all(),
             'deleted' => $deleted,
-            'updated' => $updated
+            'updated' => $updated,
         ]);
     }
 
