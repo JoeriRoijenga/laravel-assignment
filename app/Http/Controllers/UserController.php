@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Company;
+use App\Models\Job;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -25,6 +27,9 @@ class UserController extends Controller
         $tfUpdated = false;
         $userItself = false;
 
+        $jobs = Job::all();
+        $companies = Company::all();
+
         if (!auth()->user()->two_factor_secret) {
             $tfAuth = "Disabled";
             $btnAuthClass = "danger";
@@ -44,6 +49,8 @@ class UserController extends Controller
             'btnAuthClass' => $btnAuthClass,
             'tfUpdated' => $tfUpdated,
             'userItself' => $userItself,
+            'jobs' => $jobs,
+            'companies' => $companies,
         ]);
     }
 
@@ -129,9 +136,5 @@ class UserController extends Controller
         ])->save();
         
         return view('home');
-    }
-
-    public function register() {
-        dd("register");
     }
 }

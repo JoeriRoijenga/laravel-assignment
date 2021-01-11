@@ -47,6 +47,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         @if (auth()->user()->role !== 0)
                             <div class="form-group row">
                                 <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
@@ -58,6 +59,44 @@
                                         @if (auth()->user()->role == 2)
                                             <option value="2" <?php if($user->role == 2) {echo "selected";} ?>>Super Admin</option>
                                         @endif
+                                    </select>
+
+                                    @error('role')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="job" class="col-md-4 col-form-label text-md-right">{{ __('Job') }}</label>
+    
+                                <div class="col-md-6">
+                                    <select name="job" id="job" class="form-control @error('job') is-invalid @enderror">
+                                        @foreach($jobs as $job)    
+                                            <option value="{{ $job->job_id }}" <?php if($user->job_id == $job->job_id) {echo "selected";} ?>>{{ $job->title }}</option>
+                                        @endforeach
+                                    </select>
+    
+                                    @error('role')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        @endif
+                        
+                        @if (auth()->user()->role == 2)
+                            <div class="form-group row">
+                                <label for="company" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}</label>
+
+                                <div class="col-md-6">
+                                    <select name="company" id="company" class="form-control @error('company') is-invalid @enderror">
+                                        @foreach($companies as $company)    
+                                            <option value="{{ $company->company_id }}" <?php if($user->company_id == $company->company_id) {echo "selected";} ?>>{{ $company->company_name }}</option>
+                                        @endforeach
                                     </select>
 
                                     @error('role')

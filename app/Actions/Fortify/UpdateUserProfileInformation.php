@@ -23,7 +23,17 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         $dbUser = User::findOrFail($input['id']);
-        
+        $job_id = $dbUser->job_id;
+        $company_id = $dbUser->company_id;
+
+        if (isset($input['company'])) {
+            $company_id = $input['company'];
+        }
+
+        if (isset($input['job'])) {
+            $job_id =  $input['job'];
+        }
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
 
@@ -45,6 +55,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'role' => $input['role'],
+                'job_id' => $job_id,
+                'company_id' => $company_id,
             ])->save();
         }
         
