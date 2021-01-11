@@ -9,7 +9,8 @@ use Illuminate\Auth\Events\Registered;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Fortify\Contracts\RegisterResponse;
 
-use App\Models\User;
+use App\Models\Job;
+use App\Models\Company;
 
 class RegisterUserController extends RegisteredUserController
 {
@@ -20,12 +21,25 @@ class RegisterUserController extends RegisteredUserController
      * @param  \Laravel\Fortify\Contracts\CreatesNewUsers  $creator
      * @return \Laravel\Fortify\Contracts\RegisterResponse
      */
-    public function store(Request $request,
-                          CreatesNewUsers $creator): RegisterResponse
+    public function store(Request $request, CreatesNewUsers $creator): RegisterResponse
     {
         event(new Registered($user = $creator->create($request->all())));
  
         return app(RegisterResponse::class);
+    }
+
+    /**
+     * 
+     * @return \Illuminate\View\View
+     */
+    public function show() {
+        $jobs = Job::all();
+        $companies = Company::all();
+        
+        return view('auth.register', [
+            'jobs' => $jobs,
+            'companies' => $companies,
+        ]);
     }
 
 }

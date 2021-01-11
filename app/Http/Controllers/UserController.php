@@ -64,27 +64,16 @@ class UserController extends Controller
      */
     public function showAll($deleted = false)
     {
-        if (auth()->user()->role != 2) {
-            $company_id = DB::table('users')
+        $user = DB::table('users')
             ->join('jobs', 'users.job_id', '=', 'jobs.job_id')
-            ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
-            ->where('id', auth()->user()->id)
-            ->get()->first()->company_id;
+            ->join('companies', 'users.company_id', '=', 'companies.company_id');
             
-            $user = DB::table('users')
-            ->join('jobs', 'users.job_id', '=', 'jobs.job_id')
-            ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
-            ->where('companies.company_id', $company_id)
-            ->get();
-        } else {
-            $user = DB::table('users')
-            ->join('jobs', 'users.job_id', '=', 'jobs.job_id')
-            ->join('companies', 'jobs.company_id', '=', 'companies.company_id')
-            ->get();
+        if (auth()->user()->role != 2) {
+            $user->where('users.company_id', auth()->user()->company_id);
         }
 
         return view('overview-users', [
-            'users' => $user,
+            'users' => $user->get(),
             'deleted' => $deleted,
         ]);
     }

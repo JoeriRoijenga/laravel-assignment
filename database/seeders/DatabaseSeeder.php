@@ -21,19 +21,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'test',
             'email' => 'test@test.com',
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // "password"
             'remember_token' => Str::random(10),
-            'role' => 1,
-            'job_id' => rand(1, 100),
+            'role' => 2,
+            'job_id' => 1,
+            'company_id' => 1,
         ]);
-
-        // \App\Models\User::factory()->define([
-        //     'name' => 'test',
-        //     'email' => 'test@test.com',
-        //     'email_verified_at' => now(),
-        //     'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        //     'remember_token' => Str::random(10),
-        //     'role' => 1,
-        // ]);
     }
 }

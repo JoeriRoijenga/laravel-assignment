@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use DB;
 
 class Job extends Seeder
 {
@@ -13,6 +14,10 @@ class Job extends Seeder
      */
     public function run()
     {
+        DB::table('jobs')->insert([
+            'title' => "Adminstrator",
+        ]);
+
         \App\Models\Job::factory(100)->create();
     }
 }

@@ -16,10 +16,16 @@ class CreateNewUser implements CreatesNewUsers
      * Validate and create a newly registered user.
      *
      * @param  array  $input
-     * @return \App\Models\User
+     * @return 
      */
     public function create(array $input)
     {       
+        $company_id = auth()->user()->company_id;
+
+        if (auth()->user()->role == 2) {
+            $company_id = $input["company"];
+        }
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -36,11 +42,10 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['email'],
             'password' => Hash::make("best-secret-password-in-the-world!"),
             'role' => 0,
-            'job_id' => 1,
+            'job_id' => $input['job'],
+            'company_id' => $company_id
         ]);
         
         $user->sendEmailVerificationNotification();
-
-        return Route('show-all-users');
     }
 }

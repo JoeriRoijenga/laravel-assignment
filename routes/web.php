@@ -31,9 +31,11 @@ Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware([
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);
 
 Route::get('/user/register', [RegisterUserController::class, 'store'])->middleware(['auth', 'verified'])->name('register-user');
-Route::get('/user/register/new', function () {
-    return view('auth.register');
-})->name('register-view');
+Route::get('/user/register/new', [RegisterUserController::class, 'show'])->middleware(['auth', 'verified'])->name('register-view');
+
+// Route::get('/user/register/new', function () {
+//     return view('auth.register');
+// })->name('register-view');
 
 // Email Verify
 Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyView'])->name('verification.verify');

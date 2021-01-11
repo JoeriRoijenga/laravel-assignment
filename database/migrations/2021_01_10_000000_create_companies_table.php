@@ -13,7 +13,7 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('companies');
 
         Schema::create('companies', function (Blueprint $table) {
             $table->id("company_id");
@@ -25,7 +25,6 @@ class CreateCompaniesTable extends Migration
             $table->string('housenumber');
         });
 
-        Schema::enableForeignKeyConstraints();
     }
 
     /**

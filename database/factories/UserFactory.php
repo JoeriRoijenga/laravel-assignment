@@ -30,6 +30,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'role' => rand(0,1),
             'job_id' => rand(1, 100),
+            'company_id' => rand(1,2),
         ];
     }
 }

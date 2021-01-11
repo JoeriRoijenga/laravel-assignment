@@ -23,7 +23,6 @@ class JobFactory extends Factory
     {
         return [
             'title' => $this->faker->jobTitle,
-            'company_id' => rand(1,2),
         ];
     }
 }

@@ -25,7 +25,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('role');
             $table->unsignedBigInteger('job_id');
-            $table->foreign('job_id')->references('job_id')->on('jobs')->onDelete('cascade');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('job_id')->references('job_id')->on('jobs');
+            $table->foreign('company_id')->references('company_id')->on('companies');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -44,6 +46,11 @@ class CreateUsersTable extends Migration
             $table->dropForeign('job_id'); 
             $table->dropIndex('job_id');
             $table->dropColumn('job_id');
+        }
+        if (Schema::hasColumn('users', 'company_id')) {
+            $table->dropForeign('company_id'); 
+            $table->dropIndex('company_id');
+            $table->dropColumn('company_id');
         }
         Schema::dropIfExists('users');
     }
