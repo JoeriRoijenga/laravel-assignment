@@ -16,7 +16,7 @@ class Company extends Seeder
     {
         DB::table('companies')->insert([
             'company_name' => "CRM",
-            'path_to_logo' => "logo.png",
+            'path_to_logo' => "images/logo.png",
             'city' => 'Groningen',
             'zip' => "9751HA",
             'street' => "Groningerlaan",

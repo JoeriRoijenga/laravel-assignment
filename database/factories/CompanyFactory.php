@@ -23,7 +23,7 @@ class CompanyFactory extends Factory
     {
         return [
             'company_name' => $this->faker->company,
-            'path_to_logo' => "logo.png",
+            'path_to_logo' => "images/logo.png",
             'city' => $this->faker->city,
             'zip' => $this->faker->postcode,
             'street' => $this->faker->streetName,

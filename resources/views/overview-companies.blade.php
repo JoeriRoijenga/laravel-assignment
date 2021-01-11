@@ -11,9 +11,9 @@
                     <form action="{{ route('company-add') }}" method="GET">
                         <p class="float-left">{{ __('Companies Overview') }}</p>
                         <button class="btn btn-secondary float-right" type="submit">Add Company</button>
-                    </div>
+                    </form>
                 </div>
-
+            
                 <div class="card-body">
                     @if ($deleted == true)
                         <div class="alert alert-success" role="alert">
@@ -53,7 +53,7 @@
                                         {{ $company->street }} {{ $company->housenumber }}, {{ $company->zip }}, {{ $company->city }}
                                     </td>
                                     <td>
-                                        <form action="/company/edit/{{$company->company_id}}" method="GET">
+                                        <form action="/company/edit/{{$company->company_id}}" method="GET">                                            
                                             <button class="btn btn-info">Edit</button>
                                         </form>
                                     </td>

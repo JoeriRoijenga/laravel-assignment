@@ -19,7 +19,7 @@ class CompanyController extends Controller
      * @return \Illuminate\View\View
      */
     public function edit($id)
-    {       
+    {
         return view('company.edit', [
             'company' => Company::where('company_id', $id)->first(),
         ]);
@@ -83,7 +83,8 @@ class CompanyController extends Controller
         }
 
         if ($request->logo != null) {
-            $path = $request->logo->storeAs("public/images/" . $request->company_name, $fileName);
+            $request->logo->storeAs("public/images/" . $request->company_name, $fileName);
+            $path = "images/" . $request->company_name . "/" . $fileName;
         }
 
         $company->fill([

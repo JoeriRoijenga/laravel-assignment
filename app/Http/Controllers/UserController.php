@@ -79,9 +79,12 @@ class UserController extends Controller
             $user->where('users.company_id', auth()->user()->company_id);
         }
 
+        $logo = DB::table('companies')->where('company_id', auth()->user()->company_id)->first();
+
         return view('overview-users', [
             'users' => $user->get(),
             'deleted' => $deleted,
+            'logo' => $logo,
         ]);
     }
 
