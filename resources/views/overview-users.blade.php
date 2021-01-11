@@ -17,7 +17,7 @@
                             <p class="float-left" style="font-size: 10px"> *Super Admin sees all Users<p>
                         @endif
                         <button class="btn btn-secondary float-right" type="submit">Add User</button>
-                    </div>
+                    </form>
 
                 <div class="card-body">
                     @if ($deleted == true)
