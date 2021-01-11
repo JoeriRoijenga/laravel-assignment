@@ -30,12 +30,9 @@ Route::get('/users/overview', [UserController::class, 'showAll'])->middleware(['
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);
 Route::get('/user/delete/{id}', [UserController::class, 'delete'])->middleware(['auth', 'verified']);
 
+// Register
 Route::get('/user/register', [RegisterUserController::class, 'store'])->middleware(['auth', 'verified'])->name('register-user');
 Route::get('/user/register/new', [RegisterUserController::class, 'show'])->middleware(['auth', 'verified'])->name('register-view');
-
-// Route::get('/user/register/new', function () {
-//     return view('auth.register');
-// })->name('register-view');
 
 // Email Verify
 Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verifyView'])->name('verification.verify');
@@ -45,4 +42,8 @@ Route::get('/email/verify/update', [UserController::class, 'verify'])->name('ver
 Route::get('/companies/overview', [CompanyController::class, 'showAll'])->middleware(['auth', 'verified']);
 Route::get('/company/edit/{id}', [CompanyController::class, 'edit'])->middleware(['auth', 'verified']);
 Route::get('/company/delete/{id}', [CompanyController::class, 'delete'])->middleware(['auth', 'verified']);
-Route::get('/company/update', [CompanyController::class, 'update', 'as' => 'company-update'])->middleware(['auth', 'verified']);
+Route::get('/company/update', [CompanyController::class, 'update'])->middleware(['auth', 'verified']);
+Route::get('/company/add', function () {
+    return view('company.add');
+})->middleware(['auth', 'verified'])->name('company-add');
+Route::get('/company/add/new', [CompanyController::class, 'add'])->middleware(['auth', 'verified'])->name('company-add-new');

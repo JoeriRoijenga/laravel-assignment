@@ -7,7 +7,12 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Companies Overview') }}</div>
+                <div class="card-header">
+                    <form action="{{ route('company-add') }}" method="GET">
+                        <p class="float-left">{{ __('Companies Overview') }}</p>
+                        <button class="btn btn-secondary float-right" type="submit">Add Company</button>
+                    </div>
+                </div>
 
                 <div class="card-body">
                     @if ($deleted == true)

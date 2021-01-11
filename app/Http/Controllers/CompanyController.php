@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 
 class CompanyController extends Controller
@@ -42,6 +44,8 @@ class CompanyController extends Controller
      */
     public function delete($id)
     {
+        User::where('company_id', $id)->delete();
+
         if (Company::where('company_id', $id)->delete()) {
             return $this->showAll(true);
         }
@@ -69,6 +73,36 @@ class CompanyController extends Controller
     
         $company->save();
 
+        return $this->showAll(false, true);
+    }
+
+    /**
+     * Add new company.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function add(Request $request) {
+        $company = Company::create([
+            'company_name' => $request->company_name,
+            'path_to_logo' => 'logo.png',
+            'city' => 1,
+            'zip' => 'xxxxx',
+            'street' => 'street',
+            'housenumber' => 1,
+        ]);
+
+        $user = User::create([
+            'name' => $request->user_name,
+            'email' => $request->email,
+            'password' => Hash::make("best-secret-password-in-the-world!"),
+            'role' => 1,
+            'job_id' => 1,
+            'company_id' => $company->company_id
+        ]);
+        
+        $user->sendEmailVerificationNotification();
+        
         return $this->showAll(false, true);
     }
 }
